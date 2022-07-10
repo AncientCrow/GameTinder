@@ -7,4 +7,3 @@ class Card(models.Model):
     icon = models.ImageField
     name = models.CharField(max_length=25)
     games = models.TextField(max_length=1500)
-    relation = models.ManyToOneRel()
