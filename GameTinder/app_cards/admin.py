@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from app_cards import models
+
+
+@admin.register(models.Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'tg_id', 'name')
