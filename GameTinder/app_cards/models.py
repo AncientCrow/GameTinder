@@ -19,7 +19,15 @@ class Profile(models.Model):
         verbose_name_plural = 'Профили'
 
 
-class Card(models.Model):
-    icon = models.ImageField
+class Group(models.Model):
+    icon = models.ImageField()
     name = models.CharField(max_length=25)
-    games = models.TextField(max_length=1500)
+    about = models.TextField(max_length=1500)
+    players = models.ManyToManyField('Profile')
+
+
+class Games(models.Model):
+    icon = models.ImageField()
+    name = models.CharField(max_length=256)
+    players = models.ManyToManyField('Profile')
+

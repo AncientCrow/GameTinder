@@ -1,4 +1,5 @@
 import telebot
+from app_cards.bot_utils import bot_utils
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -61,6 +62,26 @@ class Command(BaseCommand):
 
         @bot.message_handler(commands=['edit', ])
         def user_edit(message):
-            pass
+
+            tg_id = message.chat.id
+
+            text = 'Что вы желаете изменить? Ваши игры или привязку к группам?'
+            bot.send_message(tg_id, text, reply_markup=bot_utils.generate_markup_edit())
+
+        @bot.callback_query_handler(func=lambda call: ['edit_games', 'edit_groups'])
+        def edit_callback(call):
+
+            tg_id = call.chat.id
+            username = call.chat.username
+
+            profile = models.Profile.objects.filter(
+                tg_id=tg_id,
+                name=username,
+            ).first()
+
+            if call.data == 'edit_games':
+                bot.answer_callback_query(call.id, 'Изменяем игры')
+            elif call.data == 'edit_groups':
+                bot.answer_callback_query(call.id, 'Изменяем группу')
 
         bot.polling()
