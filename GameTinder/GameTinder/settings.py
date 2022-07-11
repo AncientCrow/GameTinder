@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from dotenv import dotenv_values
 
+secret_values = dotenv_values('.env')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%f(a$cpfrp8i-q&78be2y5!*)ht-kiqziqzs+y=5joqs^xbp*!'
+SECRET_KEY = secret_values['DJANGO_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -129,8 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-# BOT Settings
+# Настройки для бота
 
-TOKEN = '5539381275:AAE6SYTydBWwnXzeto1JR0mL2WQcQbdqDGs'
 
-PROXY_URL = 'https://telegg.ru/orig/bot'
+TOKEN = secret_values['TOKEN']
